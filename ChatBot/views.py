@@ -1,12 +1,10 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from MachineLearning import sumNums
-from wit import  Wit
+from wit import Wit
 import ast
-
-
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
-
+@csrf_exempt
 def ChatBotMessage(request):
 
     text = request.POST["chat"]
