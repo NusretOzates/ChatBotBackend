@@ -2,17 +2,10 @@ import json
 
 
 class ChatHandler:
-    intent = ""
-    response = ''
-    message = ''
+    profile = ''
 
-    vergessenesElement = ""
-    zustand = ""
-    objekt = ""
-
-    def setupParameters(self, response, message):
-        self.response = response
-        self.message = message
+    def setupParameters(self, user):
+        self.profile = user.profile
 
     def getResult(self):
         # Wie werden Funktionen benutzen.
@@ -26,17 +19,18 @@ class ChatHandler:
         }
 
         # Get intent from self.response
-        if self.response.get("entities").get("intent") is None:
+        if self.profile.response.get("entities").get("intent") is None:
             # We don't know the user intent
             x = {
                 "antwort": "Ich kann Sie nicht verstehen",
-                "message": self.message
+                "message": self.profile.message
             }
             return json.dumps(x)
         else:
-            self.intent = self.response.get("entities").get("intent")[0].get("value")
+            self.profile.intent = self.profile.response.get("entities").get("intent")[0].get("value")
+            self.profile.save()
             # Necessary function to use intent
-            antwort = switcher[self.intent]
+            antwort = switcher[self.profile.intent]
 
             # Result of intent
             return json.dumps(antwort())
@@ -44,9 +38,10 @@ class ChatHandler:
     def cleanup(self):
 
         antwort = ''
-        if "objekt" in self.response.get("entities"):
-            self.objekt = self.response.get("entities").get("objekt")[0].get("value")
-            if self.objekt == "Client":
+        if "objekt" in self.profile.response.get("entities"):
+            self.profile.objekt = self.profile.response.get("entities").get("objekt")[0].get("value")
+            self.profile.save()
+            if self.profile.objekt == "Client":
                 # Todo did it work button?
                 antwort = "Führen Sie einen Workspace cleanup durch"
             else:
@@ -55,42 +50,51 @@ class ChatHandler:
 
             x = {
                 "antwort": antwort,
-                "message": self.message
+                "message": self.profile.message
             }
             return x
 
         return {
             "antwort": "Ich habe Sie nicht verstanden.",
-            "message": self.message
+            "message": self.profile.message
         }
 
     # User wants to change Username or Password
     def zuruecksetzen(self):
+        antwort = "Ich kann sie nicht verstehen"
+        print(self.profile.objekt)
 
-        if "vergessenesElement" in self.response.get("entities"):
-            self.vergessenesElement = self.response.get("entities").get("vergessenesElement")[0].get("value")
-            antwort = "Um Ihr %s zurückzusetzen, folgen Sie folgenden Anweisungen unter www.mercedes.com.tr/%s-zurucksetzen" % (
-                self.vergessenesElement, self.vergessenesElement)
+        if "objekt" in self.profile.response.get("entities"):
+            self.profile.objekt = self.profile.response.get("entities").get("objekt")[0].get("value")
+            self.profile.save()
 
-        else:
-            antwort = "Um Ihr %s zurückzusetzen, folgen Sie folgenden Anweisungen unter www.mercedes.com.tr/%s-zurucksetzen" % (
-                self.objekt, self.objekt)
+            antwort = "Um Ihr %s zurückzusetzen, folgen Sie folgenden Anweisungen unter " \
+                      "www.mercedes.com.tr/%s-zurucksetzen" % (
+                          self.profile.objekt, self.profile.objekt)
+
+        # Eger objekt yoksa ne diyecegiz?
+        elif self.profile.objekt != "":
+
+            antwort = "Um Ihr %s zurückzusetzen, folgen Sie folgenden Anweisungen unter " \
+                      "www.mercedes.com.tr/%s-zurucksetzen" % (
+                          self.profile.objekt, self.profile.objekt)
 
         x = {
             "antwort": antwort,
-            "message": self.message
+            "message": self.profile.message
         }
         return x
 
     def entsperren(self):
 
-        if "objekt" in self.response.get("entities"):
-            self.objekt = self.response.get("entities").get("objekt")[0].get("value")
+        if "objekt" in self.profile.response.get("entities"):
+            self.profile.objekt = self.profile.response.get("entities").get("objekt")[0].get("value")
+            self.profile.save()
             antwort = "Um Ihr Konto zu entsperren, wenden Sie sich an Technical Support"
 
             x = {
                 "antwort": antwort,
-                "message": self.message
+                "message": self.profile.message
             }
             return x
 
@@ -100,30 +104,26 @@ class ChatHandler:
 
         x = {
             "antwort": antwort,
-            "message": self.message
+            "message": self.profile.message
         }
 
-        if "objekt" in self.response.get("entities"):
-            self.objekt = self.response.get("entities").get("objekt")[0].get("value")
-            antwort = "Was für ein Problem haben Sie mit ihren %s" % (self.objekt)
-            x = {
-                "antwort": antwort,
-                "message": self.message
-            }
-        if "vergessenesElement" in self.response.get("entities"):
-            self.vergessenesElement = self.response.get("entities").get("vergessenesElement")[0].get("value")
-            antwort = "Was für ein Problem haben Sie mit ihren %s" % (self.vergessenesElement)
-            x = {
-                "antwort": antwort,
-                "message": self.message
-            }
-        if "zustand" in self.response.get("entities") and self.objekt != "":
-            self.zustand = self.response.get("entities").get("zustand")[0].get("value")
+        if "objekt" in self.profile.response.get("entities"):
+            self.profile.objekt = self.profile.response.get("entities").get("objekt")[0].get("value")
+            self.profile.save()
 
-            antwort = "Ist dein %s %s?" % (self.objekt, self.zustand)
+            antwort = "Was für ein Problem haben Sie mit ihren %s" % self.profile.objekt
             x = {
                 "antwort": antwort,
-                "message": self.message
+                "message": self.profile.message
+            }
+        if "zustand" in self.profile.response.get("entities") and self.profile.objekt != "":
+            self.profile.zustand = self.profile.response.get("entities").get("zustand")[0].get("value")
+            self.profile.save()
+
+            antwort = "Ist dein %s %s?" % (self.profile.objekt, self.profile.zustand)
+            x = {
+                "antwort": antwort,
+                "message": self.profile.message
             }
         return x
 
@@ -131,9 +131,10 @@ class ChatHandler:
         antwort = "Hallo! Wie kann ich Ihnen helfen?"
         x = {
             "antwort": antwort,
-            "message": self.message
+            "message": self.profile.message
         }
         return x
 
     def anmeldeprobleme(self):
         antwort = ""
+

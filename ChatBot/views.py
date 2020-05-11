@@ -16,23 +16,20 @@ from ChatBot.JsonHandler import JsonHandler
 
 response = {}
 
-jsonHandler = JsonHandler()
+
 
 
 @csrf_exempt
 @api_view(["POST"])
 def ChatBotMessage(request):
     user = request.user
-    print(user.username)
-
+    # print(user.username)
     # Get message from Vue
+    jsonHandler = JsonHandler()
     actualText = json.loads(request.body)
-    jsonHandler.setupParameters(actualText)
+    jsonHandler.setupParameters(actualText, user)
 
     return HttpResponse(jsonHandler.getResult())
-
-
-
 
 
 @csrf_exempt

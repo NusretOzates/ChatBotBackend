@@ -13,11 +13,13 @@ class JsonHandler:
     message = ""
     ismultiple = False
     answer = ""
+    user = ''
 
-    def setupParameters(self, json):
+    def setupParameters(self, json, user):
         self.message = json["chat"]
         self.ismultiple = json["multiple"]
         self.answer = json["answer"]
+        self.user = user
 
     def getResult(self):
         if self.ismultiple:
@@ -26,13 +28,16 @@ class JsonHandler:
             return self.chat()
 
     def multiple(self):
-        handler = MultipleChoiceHandler(self.message, self.answer)
+        handler = MultipleChoiceHandler(self.message, self.answer, self.user)
         return handler.necessary
 
     def chat(self):
         response = self.client.message(self.message)
         x = str(response)
         response = ast.literal_eval(x)
-        self.chatHandler.setupParameters(response, self.message)
+        self.user.profile.response = response
+        self.user.profile.message = self.message
+        self.user.profile.save()
+        self.chatHandler.setupParameters(self.user)
 
         return self.chatHandler.getResult()
