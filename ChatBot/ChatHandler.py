@@ -1,6 +1,8 @@
 import json
 
 
+# 0 -> Multiple degil  1 -> Ja nein 2 -> checkbox
+
 class ChatHandler:
     profile = ''
 
@@ -15,7 +17,8 @@ class ChatHandler:
             "begruessung": self.begruessung,
             "anmeldeproblem": self.anmeldeprobleme,
             "cleanupWorkspace": self.cleanup,
-            "entsperren": self.entsperren
+            "entsperren": self.entsperren,
+            "berechtigung": self.berechtigung
         }
 
         # Get intent from self.response
@@ -23,7 +26,8 @@ class ChatHandler:
             # We don't know the user intent
             x = {
                 "antwort": "Ich kann Sie nicht verstehen",
-                "message": self.profile.message
+                "message": self.profile.message,
+                "isMultiple": 0
             }
             return json.dumps(x)
         else:
@@ -34,6 +38,42 @@ class ChatHandler:
 
             # Result of intent
             return json.dumps(antwort())
+
+    def berechtigung(self):
+
+        antwort = ''
+
+        x, y, z = False
+
+        if 'applikation' in self.profile.response.get('entities'):
+
+            self.profile.application = self.profile.response.get('entities').get('application')[0].get('value')
+            self.profile.save()
+            antwort = "Welche Berechtigungen benötigen sie für " + self.profile.application + " ?"
+            x = {
+                "antwort": antwort,
+                "message": self.profile.message,
+                "isMultiple": 2
+            }
+            return x
+
+        elif self.profile.application != "":
+            antwort = "Welche Berechtigungen benötigen sie für " + self.profile.application + " ?"
+            x = {
+                "antwort": antwort,
+                "message": self.profile.message,
+                "isMultiple": 2
+            }
+            return x
+        else:
+
+            antwort = 'Auf Welche Applikation mochten sie zugreifen'
+            x = {
+                "antwort": antwort,
+                "message": self.profile.message,
+                "isMultiple": 0
+            }
+            return x
 
     def cleanup(self):
 
@@ -46,17 +86,19 @@ class ChatHandler:
                 antwort = "Führen Sie einen Workspace cleanup durch"
             else:
                 # todo : Button Yes No
-                antwort = "Ich habe Sie nicht verstanden. Haben Sie ein Problem mit dem Client? "
+                antwort = "Ich habe Sie nicht verstanden. Haben Sie ein Problem mit dem Client?"
 
             x = {
                 "antwort": antwort,
-                "message": self.profile.message
+                "message": self.profile.message,
+                "isMultiple": 1
             }
             return x
 
         return {
             "antwort": "Ich habe Sie nicht verstanden.",
-            "message": self.profile.message
+            "message": self.profile.message,
+            "isMultiple": 0
         }
 
     # User wants to change Username or Password
@@ -79,9 +121,13 @@ class ChatHandler:
                       "www.mercedes.com.tr/%s-zurucksetzen" % (
                           self.profile.objekt, self.profile.objekt)
 
+        else:
+            antwort = 'Ich habe Sie nicht verstanden'
+
         x = {
             "antwort": antwort,
-            "message": self.profile.message
+            "message": self.profile.message,
+            "isMultiple": 0
         }
         return x
 
@@ -94,7 +140,8 @@ class ChatHandler:
 
             x = {
                 "antwort": antwort,
-                "message": self.profile.message
+                "message": self.profile.message,
+                "isMultiple": 0
             }
             return x
 
@@ -104,8 +151,14 @@ class ChatHandler:
 
         x = {
             "antwort": antwort,
-            "message": self.profile.message
+            "message": self.profile.message,
+            "isMultiple": 0
         }
+
+        if 'applikation' in self.profile.response.get("entities"):
+            self.profile.application = self.profile.response.get("entities").get("applikation")[0].get("value")
+            self.profile.save()
+            self.berechtigung()
 
         if "objekt" in self.profile.response.get("entities"):
             self.profile.objekt = self.profile.response.get("entities").get("objekt")[0].get("value")
@@ -114,7 +167,8 @@ class ChatHandler:
             antwort = "Was für ein Problem haben Sie mit ihren %s" % self.profile.objekt
             x = {
                 "antwort": antwort,
-                "message": self.profile.message
+                "message": self.profile.message,
+                "isMultiple": 0
             }
         if "zustand" in self.profile.response.get("entities") and self.profile.objekt != "":
             self.profile.zustand = self.profile.response.get("entities").get("zustand")[0].get("value")
@@ -123,7 +177,8 @@ class ChatHandler:
             antwort = "Ist dein %s %s?" % (self.profile.objekt, self.profile.zustand)
             x = {
                 "antwort": antwort,
-                "message": self.profile.message
+                "message": self.profile.message,
+                "isMultiple": 0
             }
         return x
 
@@ -131,10 +186,10 @@ class ChatHandler:
         antwort = "Hallo! Wie kann ich Ihnen helfen?"
         x = {
             "antwort": antwort,
-            "message": self.profile.message
+            "message": self.profile.message,
+            "isMultiple": 0
         }
         return x
 
     def anmeldeprobleme(self):
         antwort = ""
-

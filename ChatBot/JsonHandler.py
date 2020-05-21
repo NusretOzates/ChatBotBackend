@@ -16,13 +16,16 @@ class JsonHandler:
     user = ''
 
     def setupParameters(self, json, user):
-        self.message = json["chat"]
-        self.ismultiple = json["multiple"]
-        self.answer = json["answer"]
+        self.message = json.get("chat")  # answer
+        self.ismultiple = json.get("multiple")
+        self.answer = json.get("answer")  # neye Ja nein
         self.user = user
 
+        self.user.profile.message = self.message
+        self.user.profile.save()
+
     def getResult(self):
-        if self.ismultiple:
+        if self.ismultiple is not None and self.ismultiple:
             return self.multiple()
         else:
             return self.chat()
@@ -36,8 +39,7 @@ class JsonHandler:
         x = str(response)
         response = ast.literal_eval(x)
         self.user.profile.response = response
-        self.user.profile.message = self.message
-        self.user.profile.save()
+
         self.chatHandler.setupParameters(self.user)
 
         return self.chatHandler.getResult()

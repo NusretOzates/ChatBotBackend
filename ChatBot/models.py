@@ -12,3 +12,4 @@ class Profile(models.Model):
     vergessenesElement = models.TextField(max_length=500, blank=True)
     zustand = models.TextField(max_length=500, blank=True)
     objekt = models.TextField(max_length=500, blank=True)
+    application = models.TextField(max_length=500, blank=True)

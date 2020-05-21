@@ -17,8 +17,6 @@ from ChatBot.JsonHandler import JsonHandler
 response = {}
 
 
-
-
 @csrf_exempt
 @api_view(["POST"])
 def ChatBotMessage(request):
