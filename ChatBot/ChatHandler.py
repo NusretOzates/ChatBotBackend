@@ -45,7 +45,7 @@ class ChatHandler:
 
         if 'applikation' in self.profile.response.get('entities'):
 
-            self.profile.application = self.profile.response.get('entities').get('application')[0].get('value')
+            self.profile.application = self.profile.response.get('entities').get('applikation')[0].get('value')
             self.profile.save()
             antwort = "Welche Berechtigungen benötigen sie für " + self.profile.application + " ?"
             x = {
