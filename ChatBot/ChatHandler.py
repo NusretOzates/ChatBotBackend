@@ -42,11 +42,7 @@ class ChatHandler:
     def berechtigung(self):
 
         antwort = ''
-
-        if 'applikation' in self.profile.response.get('entities'):
-
-            self.profile.application = self.profile.response.get('entities').get('applikation')[0].get('value')
-            self.profile.save()
+        if self.profile.application != "":
             antwort = "Welche Berechtigungen benötigen sie für " + self.profile.application + " ?"
             x = {
                 "antwort": antwort,
@@ -54,8 +50,9 @@ class ChatHandler:
                 "isMultiple": 2
             }
             return x
-
-        elif self.profile.application != "":
+        elif 'applikation' in self.profile.response.get('entities'):
+            self.profile.application = self.profile.response.get('entities').get('applikation')[0].get('value')
+            self.profile.save()
             antwort = "Welche Berechtigungen benötigen sie für " + self.profile.application + " ?"
             x = {
                 "antwort": antwort,
