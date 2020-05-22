@@ -153,7 +153,7 @@ class ChatHandler:
         if 'applikation' in self.profile.response.get("entities"):
             self.profile.application = self.profile.response.get("entities").get("applikation")[0].get("value")
             self.profile.save()
-            return self.berechtigung()
+            x = self.berechtigung()
 
         if "objekt" in self.profile.response.get("entities"):
             self.profile.objekt = self.profile.response.get("entities").get("objekt")[0].get("value")
