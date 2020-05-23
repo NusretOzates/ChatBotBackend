@@ -14,12 +14,12 @@ class JsonHandler:
     ismultiple = False
     answer = ""
     user = ''
-
     def setupParameters(self, json, user):
         self.message = json.get("chat")  # answer
         self.ismultiple = json.get("multiple")
         self.answer = json.get("answer")  # neye Ja nein
         self.user = user
+
 
         self.user.profile.message = self.message
         self.user.profile.save()
