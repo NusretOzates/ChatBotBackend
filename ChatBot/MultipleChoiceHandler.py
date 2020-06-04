@@ -5,7 +5,6 @@ class MultipleChoiceHandler:
         self.message = message
         self.user = user
 
-
         # Hangi soruya cevap verdigi
         self.answer = answer
 
@@ -21,6 +20,11 @@ class MultipleChoiceHandler:
 
     def permission(self):
         print(self.answer)
+
+        split = self.answer.split("/")
+        begrundung = split[0].strip()
+        permissions = split[1].strip()
+
         # todo: split the message up in requestedPermissions + reasoning --> save in user.profile.requestedPermissions & user.profile.reasoning
         # todo: Create "ticket" table:
         """
@@ -33,6 +37,7 @@ class MultipleChoiceHandler:
                 reasoning: varchar
                 ticketcreationdate: date
         """
+
         # todo: save the request accordingly as a ticket in the database
         """
             --> id: A_I
