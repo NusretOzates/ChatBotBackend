@@ -25,7 +25,9 @@ class MultipleChoiceHandler:
 
     def permission(self):
         print(self.answer)
-
+        split = self.answer.split("/")
+        begrundung = split[0].strip()
+        permissions = split[1].strip()
         # todo: split the message up in requestedPermissions + reasoning --> save in user.profile.requestedPermissions & user.profile.reasoning
         # todo: Create "ticket" table:
         """
@@ -49,7 +51,7 @@ class MultipleChoiceHandler:
             --> ticketcreationdate: getTime(now)
         """
         ticketid = random.randint(100000, 999999)
-        ticket = models.Ticket.create(ticketid,self.user,self.user.profile.application,self.user.profile.intent,self.answer,self.answer)
+        ticket = models.Ticket.create(ticketid,self.user,self.user.profile.application,self.user.profile.intent,permissions,begrundung)
         models.Ticket.save()
         x = {
             "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + self.answer + ". Es wurde ein Ticket mit folgender ID angelegt: "+ ticketid + " .Nähere Details an Ihre hinterlegte Mail versendet.",
