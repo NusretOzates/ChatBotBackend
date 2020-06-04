@@ -5,6 +5,7 @@ class MultipleChoiceHandler:
         self.message = message
         self.user = user
 
+
         # Hangi soruya cevap verdigi
         self.answer = answer
 
@@ -19,10 +20,39 @@ class MultipleChoiceHandler:
         # Benutzer user mochte W,X  fur applikation. begrundung : .
 
     def permission(self):
-        print("Hello Sedat")
+        print(self.answer)
+        # todo: split the message up in requestedPermissions + reasoning --> save in user.profile.requestedPermissions & user.profile.reasoning
+        # todo: Create "ticket" table:
+        """
+            ticket:
+                id: int
+                user_id: user.id
+                intent: varchar
+                application: varchar
+                requestedPermissions: varchar
+                reasoning: varchar
+                ticketcreationdate: date
+        """
+        # todo: save the request accordingly as a ticket in the database
+        """
+            --> id: A_I
+            --> user_id: user.profile.id
+            --> intent: user.profile.intent
+            --> application: user.profile.application
+            --> requestedPermissions: user.profile.permissions
+            --> reasoning: user.profile.reasoning
+            --> ticketcreationdate: getTime(now)
+        """
+        x = {
+            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + self.answer + ". Es wurde ein Ticket mit folgender ID angelegt: (ticket.id).Nähere Details an Ihre hinterlegte Mail versendet.",
+            "message": self.answer,
+            "isMultiple": 0
+        }
+        emailcontent = x[0]
+
+        return x
 
     def clientfehler(self):
-        print("Hello Sedat")
 
         if self.message == "Ja":
             x = {

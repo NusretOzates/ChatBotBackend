@@ -82,7 +82,6 @@ class ChatHandler:
             else:
                 # todo : Button Yes No
                 antwort = "Ich habe Sie nicht verstanden. Haben Sie ein Problem mit dem Client?"
-
             x = {
                 "antwort": antwort,
                 "message": self.profile.message,
