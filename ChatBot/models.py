@@ -15,6 +15,7 @@ class Profile(models.Model):
 
 
 class Ticket(models.Model):
+    ticketID = models.TextField(max_length=500, blank=True)
     creator = models.OneToOneField(User, on_delete=models.CASCADE, default='')
     user_id = models.TextField(max_length=500, blank=True)
     intent = models.TextField(max_length=500, blank=True)
@@ -22,6 +23,11 @@ class Ticket(models.Model):
     requestedPermissions = models.TextField(max_length=500, blank=True)
     reasoning = models.TextField(max_length=500, blank=True)
     creationDate = models.DateTimeField(auto_now=True)
+
+    @classmethod
+    def create(cls,ticketID, creator, intent, application, requestedPermissions, reasoning):
+        ticket = cls(ticketID=ticketID, creator=creator, intent=intent, application=application, requestedPermissions=requestedPermissions, reasoning=reasoning)
+        return ticket
 
     def save(self, *args, **kwargs):
         if self.user_id is None:

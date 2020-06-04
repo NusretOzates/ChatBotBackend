@@ -48,9 +48,12 @@ class MultipleChoiceHandler:
             --> reasoning: user.profile.reasoning
             --> ticketcreationdate: getTime(now)
         """
+        ticketid = random.randint(100000, 999999)
+        ticket = models.Ticket.create(ticketid, self.user, self.user.profile.application, self.user.profile.intent,permissions, begrundung)
+        models.Ticket.save()
         x = {
-            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + self.answer + ". Es wurde ein Ticket mit folgender ID angelegt: (ticket.id).Nähere Details an Ihre hinterlegte Mail versendet.",
-            "message": self.answer,
+            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + ticketid +" .Nähere Details an Ihre hinterlegte Mail versendet.",
+            "message": begrundung,
             "isMultiple": 0
         }
 
