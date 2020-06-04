@@ -1,5 +1,6 @@
 import ast
 
+import json
 from wit import Wit
 
 from ChatBot.ChatHandler import ChatHandler
