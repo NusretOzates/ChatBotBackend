@@ -53,7 +53,7 @@ class MultipleChoiceHandler:
             --> ticketcreationdate: getTime(now)
         """
         ticketid = random.randint(100000, 999999)
-        ticket = models.Ticket.objects.create(ticketid, self.user, self.user.profile.application, self.user.profile.intent,permissions, begrundung)
+        ticket = models.Ticket.objects.create(ticketID=ticketid, creator=self.user, application=self.user.profile.application, intent=self.user.profile.intent,requestedPermissions=permissions, reasoning=begrundung)
         x = {
             "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + str(ticketid) +". Nähere Details an Ihre hinterlegte Mail versendet.",
             "message": begrundung,
