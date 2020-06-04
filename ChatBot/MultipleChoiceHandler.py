@@ -17,7 +17,7 @@ class MultipleChoiceHandler:
             "Welche Berechtigungen benötigen sie für " + user.profile.application + " ?": self.permission,
             "Ich habe Sie nicht verstanden. Haben Sie ein Problem mit dem Client?": self.clientfehler
         }
-        self.necessary = self.switcher[message](answer)
+        self.necessary = self.switcher[answer](message)
 
         # begrundung / W,X
 
