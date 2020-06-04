@@ -17,15 +17,16 @@ class MultipleChoiceHandler:
             "Welche Berechtigungen benötigen sie für " + user.profile.application + " ?": self.permission,
             "Ich habe Sie nicht verstanden. Haben Sie ein Problem mit dem Client?": self.clientfehler
         }
-        self.necessary = self.switcher[answer](message)
+        self.necessary = self.switcher[answer]()
 
         # begrundung / W,X
 
         # Benutzer user mochte W,X  fur applikation. begrundung : .
 
     def permission(self):
-        print(self.answer)
-        split = self.answer.split("/")
+
+        print(self.message)
+        split = self.message.split("/")
         begrundung = split[0].strip()
         permissions = split[1].strip()
         # todo: split the message up in requestedPermissions + reasoning --> save in user.profile.requestedPermissions & user.profile.reasoning
