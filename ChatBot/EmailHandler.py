@@ -25,5 +25,6 @@ from django.contrib.auth.models import User
 
 
 class EmailHandler:
-        def __init__(self, emailToSend, managingRecipient, issuingRecipient):
-                print("Hallo")
+        def __init__(self, ticket):
+                print("Hallo sedat")
+

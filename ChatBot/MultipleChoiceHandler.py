@@ -1,3 +1,7 @@
+from ChatBot import models
+import random
+
+
 class MultipleChoiceHandler:
 
     def __init__(self, message, answer, user):
@@ -21,6 +25,7 @@ class MultipleChoiceHandler:
 
     def permission(self):
         print(self.answer)
+
         # todo: split the message up in requestedPermissions + reasoning --> save in user.profile.requestedPermissions & user.profile.reasoning
         # todo: Create "ticket" table:
         """
@@ -36,15 +41,18 @@ class MultipleChoiceHandler:
         # todo: save the request accordingly as a ticket in the database
         """
             --> id: A_I
-            --> user_id: user.profile.id
+            --> creator: user.profile
             --> intent: user.profile.intent
             --> application: user.profile.application
             --> requestedPermissions: user.profile.permissions
             --> reasoning: user.profile.reasoning
             --> ticketcreationdate: getTime(now)
         """
+        ticketid = random.randint(100000, 999999)
+        ticket = models.Ticket.create(ticketid,self.user,self.user.profile.application,self.user.profile.intent,self.answer,self.answer)
+        models.Ticket.save()
         x = {
-            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + self.answer + ". Es wurde ein Ticket mit folgender ID angelegt: (ticket.id).Nähere Details an Ihre hinterlegte Mail versendet.",
+            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + self.answer + ". Es wurde ein Ticket mit folgender ID angelegt: "+ ticketid + " .Nähere Details an Ihre hinterlegte Mail versendet.",
             "message": self.answer,
             "isMultiple": 0
         }
