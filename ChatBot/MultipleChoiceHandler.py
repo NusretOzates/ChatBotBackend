@@ -53,9 +53,9 @@ class MultipleChoiceHandler:
             --> ticketcreationdate: getTime(now)
         """
         ticketid = random.randint(100000, 999999)
-        ticket = models.Ticket.create(ticketid, self.user, self.user.profile.application, self.user.profile.intent,permissions, begrundung)
+        ticket = models.Ticket.objects.create(ticketid, self.user, self.user.profile.application, self.user.profile.intent,permissions, begrundung)
         x = {
-            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + str(ticketid) +" .Nähere Details an Ihre hinterlegte Mail versendet.",
+            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + str(ticketid) +". Nähere Details an Ihre hinterlegte Mail versendet.",
             "message": begrundung,
             "isMultiple": 0
         }
@@ -73,8 +73,8 @@ class MultipleChoiceHandler:
             return x
         else:
             x = {
-                "antwort": "Bitte spezifizieren Sie Ihr Problem.",
-                "message": self.answer,
+                "antwort": "Bitte spezifizieren Sie Ihr Problem.", #chatbot
+                "message": self.answer, #usernin verdigi
                 "isMultiple": 0
             }
             return x
