@@ -59,7 +59,6 @@ class MultipleChoiceHandler:
             "message": self.answer,
             "isMultiple": 0
         }
-        emailcontent = x[0]
 
         return x
 
