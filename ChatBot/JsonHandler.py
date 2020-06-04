@@ -32,7 +32,7 @@ class JsonHandler:
 
     def multiple(self):
         handler = MultipleChoiceHandler(self.message, self.answer, self.user)
-        return handler.necessary
+        return json.dumps(handler.necessary)
 
     def chat(self):
         response = self.client.message(self.message)
