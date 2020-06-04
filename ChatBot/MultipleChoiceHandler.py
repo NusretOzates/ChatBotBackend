@@ -19,9 +19,9 @@ class MultipleChoiceHandler:
         # Benutzer user mochte W,X  fur applikation. begrundung : .
 
     def permission(self):
-        print(self.answer)
+        print(self.message)
 
-        split = self.answer.split("/")
+        split = self.message.split("/")
         begrundung = split[0].strip()
         permissions = split[1].strip()
 
