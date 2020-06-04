@@ -1,3 +1,7 @@
+import random
+import ChatBot.models as models
+
+
 class MultipleChoiceHandler:
 
     def __init__(self, message, answer, user):
