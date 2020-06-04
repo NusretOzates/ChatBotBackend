@@ -55,7 +55,7 @@ class MultipleChoiceHandler:
         ticketid = random.randint(100000, 999999)
         ticket = models.Ticket.create(ticketid, self.user, self.user.profile.application, self.user.profile.intent,permissions, begrundung)
         x = {
-            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + ticketid +" .Nähere Details an Ihre hinterlegte Mail versendet.",
+            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + str(ticketid) +" .Nähere Details an Ihre hinterlegte Mail versendet.",
             "message": begrundung,
             "isMultiple": 0
         }
