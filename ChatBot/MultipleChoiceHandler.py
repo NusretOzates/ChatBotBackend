@@ -1,5 +1,6 @@
 import random
 import ChatBot.models as models
+from ChatBot.EmailHandler import EmailHandler
 
 
 class MultipleChoiceHandler:
@@ -24,11 +25,9 @@ class MultipleChoiceHandler:
 
     def permission(self):
         print(self.message)
-
         split = self.message.split("/")
         begrundung = split[0].strip()
         permissions = split[1].strip()
-
         # todo: split the message up in requestedPermissions + reasoning --> save in user.profile.requestedPermissions & user.profile.reasoning
         # todo: Create "ticket" table:
         """
@@ -53,12 +52,16 @@ class MultipleChoiceHandler:
             --> ticketcreationdate: getTime(now)
         """
         ticketid = random.randint(100000, 999999)
-        ticket = models.Ticket.objects.create(ticketID=ticketid, creator=self.user, application=self.user.profile.application, intent=self.user.profile.intent,requestedPermissions=permissions, reasoning=begrundung)
+        #Hier könnte es einen Fehler geben wegen ticketid
+        models.Ticket.objects.create(ticketID=ticketid, creator=self.user, application=self.user.profile.application, intent=self.user.profile.intent,requestedPermissions=permissions, reasoning=begrundung)
+        ticket = models.Ticket.objects.get(ticketID = ticketid)
         x = {
-            "antwort": "Wir haben Ihnen folgende Berechtigungen gegeben: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + str(ticketid) +". Nähere Details an Ihre hinterlegte Mail versendet.",
+            "antwort": "Wir haben Ihren Antrag für folgende Berechtigungen erhalten: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + str(ticketid) +". Nähere Details an Ihre hinterlegte Mail versendet.",
             "message": begrundung,
             "isMultiple": 0
         }
+
+        EmailHandler(ticket)
 
         return x
 

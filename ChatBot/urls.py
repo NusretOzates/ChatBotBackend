@@ -17,8 +17,10 @@ from django.urls import path
 
 from .views import ChatBotMessage
 from .views import loginchat
+from .views import test
 
 urlpatterns = [
     path('sums/', ChatBotMessage, name="Nusret"),
-    path('login/', loginchat, name="Login")
+    path('login/', loginchat, name="Login"),
+    path('test/', test)
 ]

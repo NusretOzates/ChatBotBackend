@@ -8,10 +8,12 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+import ChatBot.models as models
 from rest_framework.status import (
     HTTP_200_OK
 )
 
+from ChatBot.EmailHandler import EmailHandler
 from ChatBot.JsonHandler import JsonHandler
 
 response = {}
@@ -54,3 +56,10 @@ def loginchat(request):
         # Return an 'invalid login' error message.
         return Response({'message': "Username or password is false"},
                         status=HTTP_200_OK)
+
+@api_view(["GET"])
+@permission_classes((AllowAny,))
+def test(request):
+    EmailHandler(models.Ticket.objects.get(ticketID="25555"))
+    return Response({'message': "Successfully executed TEST block"},
+                    status=HTTP_200_OK)

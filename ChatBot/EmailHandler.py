@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 # todo: send out an email to request-opening-person --> standardemail: requesthandler@daimler.com
 # todo: send out an email to request-handling-person --> pull e-mail from database (user.profile.email)
 # todo: Format for Email:
+from django.core.mail import send_mail
+
 """
     Sehr geehrter Herr/Frau Hatip (User.last_name.capitalize())
 
@@ -26,4 +28,14 @@ from django.contrib.auth.models import User
 
 class EmailHandler:
         def __init__(self,ticket):
-                print("Hallo")
+                self.sendEmail(ticket)
+        def sendEmail(self,ticket):
+                emessage = "Sehr geehrter Herr/Frau Dummy,\n\n" \
+                "hiermit bestätigen wir den Eingang Ihres Supporttickets. Das Ticket mit der Kennnummer " + ticket.ticketID + " "\
+                "wird sobald wie möglich bearbeitet.\n\nIhr Anliegen: " + ticket.intent + ", Programm: " + ticket.application + ", Beantragte Rechte: " + ticket.requestedPermissions + ", Grund: "+ ticket.reasoning + "\n" \
+                "Ihre User-ID: "+ ticket.user_id +"\n\nDas Ticket wird sobald wie möglich von unserem Support Team bearbeitet. Die übliche " \
+                "Bearbeitungszeit beträgt 2-3 Werktage. Falls Sie bis dahin keine Rückmeldung von unserem Team erhalten haben, können Sie sich per E-Mail " \
+                "erneut an support@mercedes.com wenden.\nDies ist eine automatisch generierte E-Mail. Bitte antworten Sie NICHT auf diese E-Mail\n\nVielen Dank für Ihre Geduld\n\n\n" \
+                "Mit freundlichen Grüßen\n\n" \
+                "Chatbotcan"
+                send_mail(subject="Ihr Ticket mit der ID " + ticket.ticketID + " wird bearbeitet.", message=emessage , from_email="hatipdev@gmail.com", recipient_list = ["hatipsedat@gmail.com","avcisevcan98@gmail.com"], fail_silently=False)
