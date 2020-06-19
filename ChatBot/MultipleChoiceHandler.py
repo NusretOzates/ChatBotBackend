@@ -66,17 +66,17 @@ class MultipleChoiceHandler:
         return x
 
     def clientfehler(self):
-        if self.message == "Ja":
+        if self.message == "Ja/":
             x = {
                 "antwort": "Führen Sie einen Workspace cleanup durch",
-                "message": self.message,
+                "message": "Ja",
                 "isMultiple": 0
             }
             return x
         else:
             x = {
                 "antwort": "Bitte spezifizieren Sie Ihr Problem.", #chatbot
-                "message": self.message, #usernin verdigi
+                "message": "Nein", #usernin verdigi
                 "isMultiple": 0
             }
             return x
