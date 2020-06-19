@@ -36,7 +36,7 @@ class JsonHandler:
         return json.dumps(handler.necessary)
 
     def chat(self):
-        self.message = self.message[:-1]
+        #self.message = self.message[:-1]
         response = self.client.message(self.message)
         x = str(response)
         response = ast.literal_eval(x)
