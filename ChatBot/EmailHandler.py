@@ -1,5 +1,8 @@
 import json
 from django.contrib.auth.models import User
+from django.shortcuts import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authtoken.models import Token
 # todo: send out an email to request-opening-person --> standardemail: requesthandler@daimler.com
 # todo: send out an email to request-handling-person --> pull e-mail from database (user.profile.email)
 # todo: Format for Email:
@@ -29,9 +32,11 @@ import ChatBot.models as models
 
 class EmailHandler:
         def __init__(self,ticket,user):
-                self.sendEmail(ticket,user)
+                self.user = user
+                self.sendEmail(ticket,self.user)
         def sendEmail(self,ticket,user):
-                user2 = models.User.objects.get(username = "admin")
+                user2 = user
+                #user2 = models.User.objects.get(username = "admin")
                 emessage = "Sehr geehrter + " + user2.last_name.capitalize() + "\n\n" \
                 "hiermit bestätigen wir den Eingang Ihres Supporttickets. Das Ticket mit der Kennnummer " + ticket.ticketID + " "\
                 "wird sobald wie möglich bearbeitet.\n\nIhr Anliegen: " + ticket.intent + ", Programm: " + ticket.application + ", Beantragte Rechte: " + ticket.requestedPermissions + ", Grund: "+ ticket.reasoning + "\n" \
