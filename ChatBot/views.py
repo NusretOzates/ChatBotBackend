@@ -15,6 +15,7 @@ from rest_framework.status import (
 
 from ChatBot.EmailHandler import EmailHandler
 from ChatBot.JsonHandler import JsonHandler
+from ChatBot.MultipleChoiceHandler import MultipleChoiceHandler
 
 response = {}
 
@@ -44,18 +45,22 @@ def registeruser(request):
 @permission_classes((AllowAny,))
 def loginchat(request):
     # Get message from Vue
+
     actualText = json.loads(request.body)
     username = actualText['username']
     password = actualText['password']
     user = authenticate(request, username=username, password=password)
     if user is not None:
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key},
+        MultipleChoiceHandler.clearProfileInfo(user)
+        return Response({'token': token.key,
+                         'userid': "\"" + username + "\""},
                         status=HTTP_200_OK)
     else:
         # Return an 'invalid login' error message.
         return Response({'message': "Username or password is false"},
                         status=HTTP_200_OK)
+
 
 @api_view(["GET"])
 @permission_classes((AllowAny,))

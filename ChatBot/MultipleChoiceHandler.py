@@ -64,6 +64,7 @@ class MultipleChoiceHandler:
 
         EmailHandler(ticket, self.user)
         print("Email sent!")
+        self.clearProfileInfo(self.user)
 
         return x
 
@@ -82,3 +83,13 @@ class MultipleChoiceHandler:
                 "isMultiple": 0
             }
             return x
+
+    def clearProfileInfo(self, user):
+        user.profile.intent = ""
+        user.profile.application = ""
+        user.profile.message = ""
+        user.profile.objekt = ""
+        user.profile.response = ""
+        user.profile.vergessenesElement = ""
+        user.profile.zustand = ""
+        user.profile.save()
