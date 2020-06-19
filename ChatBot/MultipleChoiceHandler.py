@@ -62,7 +62,7 @@ class MultipleChoiceHandler:
             "isMultiple": 0
         }
 
-        EmailHandler(ticket, self.user)
+        EmailHandler(ticket)
         print("Email sent!")
 
         return x

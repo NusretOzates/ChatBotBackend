@@ -31,17 +31,16 @@ import ChatBot.models as models
 
 
 class EmailHandler:
-        def __init__(self,ticket,user):
-                self.user = user
-                self.sendEmail(ticket,self.user)
-        def sendEmail(self,ticket,user):
+        def __init__(self,ticket):
+                self.sendEmail(ticket)
+        def sendEmail(self,ticket):
                 print("Test1")
                 #user2 = user
                 user2 = models.User.objects.get(username = "admin")
                 emessage = "Sehr geehrter + " + user2.last_name.capitalize() + "\n\n" \
                 "hiermit bestätigen wir den Eingang Ihres Supporttickets. Das Ticket mit der Kennnummer " + ticket.ticketID + " "\
                 "wird sobald wie möglich bearbeitet.\n\nIhr Anliegen: " + ticket.intent + ", Programm: " + ticket.application + ", Beantragte Rechte: " + ticket.requestedPermissions + ", Grund: "+ ticket.reasoning + "\n" \
-                "Ihre User-ID: "+ user2.last_name.capitalize() +"\n\nDas Ticket wird sobald wie möglich von unserem Support Team bearbeitet. Die übliche " \
+                "Ihre User-ID: "+ user2.username.upper() +"\n\nDas Ticket wird sobald wie möglich von unserem Support Team bearbeitet. Die übliche " \
                 "Bearbeitungszeit beträgt 2-3 Werktage. Falls Sie bis dahin keine Rückmeldung von unserem Team erhalten haben, können Sie sich per E-Mail " \
                 "erneut an support@mercedes.com wenden.\nDies ist eine automatisch generierte E-Mail. Bitte antworten Sie NICHT auf diese E-Mail\n\nVielen Dank für Ihre Geduld\n\n\n" \
                 "Mit freundlichen Grüßen\n\n" \
