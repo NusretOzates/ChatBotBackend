@@ -31,7 +31,7 @@ class EmailHandler:
         def __init__(self,ticket,user):
                 self.sendEmail(ticket,user)
         def sendEmail(self,ticket,user):
-                user2 = user.profile.user
+                user2 = models.User.objects.get(username = "admin")
                 emessage = "Sehr geehrter + " + user2.last_name.capitalize() + "\n\n" \
                 "hiermit bestätigen wir den Eingang Ihres Supporttickets. Das Ticket mit der Kennnummer " + ticket.ticketID + " "\
                 "wird sobald wie möglich bearbeitet.\n\nIhr Anliegen: " + ticket.intent + ", Programm: " + ticket.application + ", Beantragte Rechte: " + ticket.requestedPermissions + ", Grund: "+ ticket.reasoning + "\n" \
