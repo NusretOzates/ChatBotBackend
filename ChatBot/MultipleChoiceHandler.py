@@ -55,6 +55,7 @@ class MultipleChoiceHandler:
         #Hier könnte es einen Fehler geben wegen ticketid
         models.Ticket.objects.create(ticketID=ticketid, creator=self.user, application=self.user.profile.application, intent=self.user.profile.intent,requestedPermissions=permissions, reasoning=begrundung)
         ticket = models.Ticket.objects.get(ticketID = ticketid)
+        print("Ticket created!")
         x = {
             "antwort": "Wir haben Ihren Antrag für folgende Berechtigungen erhalten: " + permissions + ". Es wurde ein Ticket mit folgender ID angelegt: " + str(ticketid) +". Nähere Details an Ihre hinterlegte Mail versendet.",
             "message": begrundung,
@@ -62,6 +63,7 @@ class MultipleChoiceHandler:
         }
 
         EmailHandler(ticket, self.user)
+        print("Email sent!")
 
         return x
 

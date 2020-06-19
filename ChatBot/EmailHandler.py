@@ -35,6 +35,7 @@ class EmailHandler:
                 self.user = user
                 self.sendEmail(ticket,self.user)
         def sendEmail(self,ticket,user):
+                print("Test1")
                 user2 = user
                 #user2 = models.User.objects.get(username = "admin")
                 emessage = "Sehr geehrter + " + user2.last_name.capitalize() + "\n\n" \
