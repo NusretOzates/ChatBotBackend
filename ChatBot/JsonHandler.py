@@ -38,6 +38,8 @@ class JsonHandler:
     def chat(self):
         split = self.message.split("/")
         self.message = split[0].strip()
+        self.user.profile.message = self.message
+        self.user.profile.save()
         response = self.client.message(self.message)
         x = str(response)
         response = ast.literal_eval(x)
