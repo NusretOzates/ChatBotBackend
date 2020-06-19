@@ -61,22 +61,23 @@ class MultipleChoiceHandler:
             "isMultiple": 0
         }
 
-        EmailHandler(ticket, self.user)
+        EmailHandler(ticket)
 
         return x
 
     def clientfehler(self):
+
         if self.message == "Ja":
             x = {
                 "antwort": "Führen Sie einen Workspace cleanup durch",
-                "message": self.message,
+                "message": self.answer,
                 "isMultiple": 0
             }
             return x
         else:
             x = {
                 "antwort": "Bitte spezifizieren Sie Ihr Problem.", #chatbot
-                "message": self.message, #usernin verdigi
+                "message": self.answer, #usernin verdigi
                 "isMultiple": 0
             }
             return x
