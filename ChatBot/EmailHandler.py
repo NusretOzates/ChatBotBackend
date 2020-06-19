@@ -31,17 +31,13 @@ class EmailHandler:
         def __init__(self,ticket,user):
                 self.sendEmail(ticket,user)
         def sendEmail(self,ticket,user):
-                user2 = models.User.objects.get(username = "admin")
-                print(user2.last_name)
-                print(user2.email.capitalize())
-                print(user2.last_name.capitalize())
-                print(User.last_name)
-                emessage = "Sehr geehrter + " + User.email.capitalize() + "\n\n" \
+                user2 = user.profile.user
+                emessage = "Sehr geehrter + " + user2.last_name.capitalize() + "\n\n" \
                 "hiermit bestätigen wir den Eingang Ihres Supporttickets. Das Ticket mit der Kennnummer " + ticket.ticketID + " "\
                 "wird sobald wie möglich bearbeitet.\n\nIhr Anliegen: " + ticket.intent + ", Programm: " + ticket.application + ", Beantragte Rechte: " + ticket.requestedPermissions + ", Grund: "+ ticket.reasoning + "\n" \
-                "Ihre User-ID: "+ ticket.user_id +"\n\nDas Ticket wird sobald wie möglich von unserem Support Team bearbeitet. Die übliche " \
+                "Ihre User-ID: "+ user2.username.upper() +"\n\nDas Ticket wird sobald wie möglich von unserem Support Team bearbeitet. Die übliche " \
                 "Bearbeitungszeit beträgt 2-3 Werktage. Falls Sie bis dahin keine Rückmeldung von unserem Team erhalten haben, können Sie sich per E-Mail " \
                 "erneut an support@mercedes.com wenden.\nDies ist eine automatisch generierte E-Mail. Bitte antworten Sie NICHT auf diese E-Mail\n\nVielen Dank für Ihre Geduld\n\n\n" \
                 "Mit freundlichen Grüßen\n\n" \
                 "Chatbotcan"
-                send_mail(subject="Ihr Ticket mit der ID " + ticket.ticketID + " wird bearbeitet.", message=emessage , from_email="hatipdev@gmail.com", recipient_list = ["hatipsedat@gmail.com","avcisevcan98@gmail.com"], fail_silently=False)
+                send_mail(subject="Ihr Ticket mit der ID " + ticket.ticketID + " wird bearbeitet.", message=emessage , from_email="hatipdev@gmail.com", recipient_list = [user2.email], fail_silently=False)
