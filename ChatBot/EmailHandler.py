@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # todo: send out an email to request-handling-person --> pull e-mail from database (user.profile.email)
 # todo: Format for Email:
 from django.core.mail import send_mail
+import ChatBot.models as models
 
 """
     Sehr geehrter Herr/Frau Hatip (User.last_name.capitalize())
@@ -27,10 +28,15 @@ from django.core.mail import send_mail
 
 
 class EmailHandler:
-        def __init__(self,ticket):
-                self.sendEmail(ticket)
-        def sendEmail(self,ticket):
-                emessage = "Sehr geehrter Herr/Frau Dummy,\n\n" \
+        def __init__(self,ticket,user):
+                self.sendEmail(ticket,user)
+        def sendEmail(self,ticket,user):
+                user2 = models.User.objects.get(username = "admin")
+                print(user2.last_name)
+                print(user2.email.capitalize())
+                print(user2.last_name.capitalize())
+                print(User.last_name)
+                emessage = "Sehr geehrter + " + User.email.capitalize() + "\n\n" \
                 "hiermit bestätigen wir den Eingang Ihres Supporttickets. Das Ticket mit der Kennnummer " + ticket.ticketID + " "\
                 "wird sobald wie möglich bearbeitet.\n\nIhr Anliegen: " + ticket.intent + ", Programm: " + ticket.application + ", Beantragte Rechte: " + ticket.requestedPermissions + ", Grund: "+ ticket.reasoning + "\n" \
                 "Ihre User-ID: "+ ticket.user_id +"\n\nDas Ticket wird sobald wie möglich von unserem Support Team bearbeitet. Die übliche " \
