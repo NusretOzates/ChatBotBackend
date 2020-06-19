@@ -38,7 +38,7 @@ class EmailHandler:
                 print("Test1")
                 user2 = user
                 #user2 = models.User.objects.get(username = "admin")
-                emessage = "Sehr geehrter Herr/Frau " + user2.last_name.capitalize() + "\n\n" \
+                emessage = "Sehr geehrter Herr/Frau " + user2.last_name.capitalize() + ",\n\n" \
                 "hiermit bestätigen wir den Eingang Ihres Supporttickets. Das Ticket mit der Kennnummer " + ticket.ticketID + " "\
                 "wird sobald wie möglich bearbeitet.\n\nIhr Anliegen: " + ticket.intent + ", Programm: " + ticket.application + ", Beantragte Rechte: " + ticket.requestedPermissions + ", Grund: "+ ticket.reasoning + "\n" \
                 "Ihre User-ID: "+ user2.username.upper() +"\n\nDas Ticket wird sobald wie möglich von unserem Support Team bearbeitet. Die übliche " \
