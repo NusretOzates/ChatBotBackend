@@ -16,7 +16,7 @@ class Profile(models.Model):
 
 class Ticket(models.Model):
     ticketID = models.TextField(max_length=500, blank=True)
-    creator = models.OneToOneField(User, on_delete=models.CASCADE, default='')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     user_id = models.TextField(max_length=500, blank=True)
     intent = models.TextField(max_length=500, blank=True)
     application = models.TextField(max_length=500, blank=True)
