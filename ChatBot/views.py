@@ -50,9 +50,15 @@ def loginchat(request):
     username = actualText['username']
     password = actualText['password']
     user = authenticate(request, username=username, password=password)
+    user.profile.intent = ""
+    user.profile.application = ""
+    user.profile.message = ""
+    user.profile.objekt = ""
+    user.profile.response = ""
+    user.profile.vergessenesElement = ""
+    user.profile.zustand = ""
     if user is not None:
         token, _ = Token.objects.get_or_create(user=user)
-        MultipleChoiceHandler.clearProfileInfo(user)
         return Response({'token': token.key,
                          'userid': "\"" + username + "\""},
                         status=HTTP_200_OK)
