@@ -30,8 +30,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'hatipdev@gmail.com'
-EMAIL_HOST_PASSWORD = "chatbot58"
+EMAIL_HOST_USER = 'mercedesbenzchatbot@gmail.com'
+EMAIL_HOST_PASSWORD = "ChatBotcan58"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 # Application definition

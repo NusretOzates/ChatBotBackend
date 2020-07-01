@@ -75,6 +75,7 @@ class MultipleChoiceHandler:
                 "message": "Ja",
                 "isMultiple": 0
             }
+            self.clearProfileInfo(self.user)
             return x
         else:
             x = {
@@ -82,6 +83,7 @@ class MultipleChoiceHandler:
                 "message": "Nein", #usernin verdigi
                 "isMultiple": 0
             }
+            self.clearProfileInfo(self.user)
             return x
 
     def clearProfileInfo(self, user):

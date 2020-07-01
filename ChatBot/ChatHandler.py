@@ -186,4 +186,10 @@ class ChatHandler:
         return x
 
     def anmeldeprobleme(self):
-        antwort = ""
+        antwort = "Wenn Sie ein Problem mit dem Anmelden haben, dann melden Sie sich an"
+        x = {
+            "antwort": antwort,
+            "message": self.profile.message,
+            "isMultiple": 0
+        }
+        return x
